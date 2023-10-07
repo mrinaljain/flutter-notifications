@@ -14,6 +14,7 @@ void main() async {
   scheduleMicrotask(() async {
     await NotificationController.getInitialNotificationAction();
   });
+  await NotificationController.initializeRemoteNotification(debug: true);
   runApp(const MyApp());
 }
 

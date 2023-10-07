@@ -39,6 +39,7 @@ dependencies:
   awesome_notifications: ^0.8.2
   fluttertoast: ^8.2.2
   awesome_notifications_fcm: ^0.8.0
+  firebase_core: ^2.17.0
 
 dev_dependencies:
   flutter_test:

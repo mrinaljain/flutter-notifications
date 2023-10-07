@@ -1,9 +1,12 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:notification_course/services/local_notification.dart';
+import 'package:notification_course/services/notification_controller.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key,});
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -17,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
-
+    NotificationController.requestFirebaseToken();
     super.initState();
   }
 

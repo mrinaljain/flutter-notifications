@@ -1,4 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:awesome_notifications_fcm/awesome_notifications_fcm.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notification_course/main.dart';
@@ -60,7 +62,19 @@ class NotificationController with ChangeNotifier {
     );
   }
 
-  // PRIVATE METHODS
+  // INITILIZE REMOTE NOTIFICATION
+  static Future<void> initializeRemoteNotification({
+    required bool debug,
+  }) async {
+    await Firebase.initializeApp();
+    await AwesomeNotificationsFcm().initialize(
+      onFcmTokenHandle: myFcmTokenHandle,
+      onFcmSilentDataHandle: mySilentDataHandle,
+      onNativeTokenHandle: myNativeTokenHandle,
+      licenseKeys: [],
+      debug: debug,
+    );
+  }
 
   // EVENT LISTNERS
   static Future<void> initializeNotificationEventListners() async {
@@ -189,5 +203,59 @@ class NotificationController with ChangeNotifier {
         break;
       default:
     }
+  }
+
+  /// Remote Notifications Event Listners
+
+  /// Use this method to execute on background when a silent data arrives even while app is terminated
+  static Future<void> mySilentDataHandle(FcmSilentData silentData) async {
+    Fluttertoast.showToast(
+      msg: "Silent Data Recived",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+    print('SilentData : ${silentData.data}');
+  }
+
+  /// Use this method to execute on background when a fcm token arrives
+  static Future<void> myFcmTokenHandle(String token) async {
+    Fluttertoast.showToast(
+      msg: "FCM Token Recived",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+    print('FCM Token : $token');
+  }
+
+  /// Use this method to execute on background when a native token arrives
+  static Future<void> myNativeTokenHandle(String token) async {
+    Fluttertoast.showToast(
+      msg: "Native Token Recived",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+    print('Native Token : $token');
+  }
+
+  static Future<String> requestFirebaseToken() async {
+    if (await AwesomeNotificationsFcm().isFirebaseAvailable) {
+      try {
+        return await AwesomeNotificationsFcm().requestFirebaseAppToken();
+      } catch (e) {
+        debugPrint('$e');
+      }
+    } else {
+      debugPrint('Firebase is not available for this project');
+    }
+    return '';
   }
 }
