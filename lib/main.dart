@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:notification_course/firebase_options.dart';
 import 'package:notification_course/screens/home_screen.dart';
 import 'package:notification_course/screens/media_screen.dart';
+import 'package:notification_course/screens/tabs_screen.dart';
 import 'package:notification_course/services/notification_controller.dart';
 
 void main() async {
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  const MediaScreen(),
+      home:  const TabsScreen(),
     );
   }
 }
