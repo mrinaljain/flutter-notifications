@@ -268,6 +268,23 @@ class LocalNotification {
     );
   }
 
+  static Future<void> createLiveScoreNotification({
+    required int id,
+    required String title,
+    required String body,
+    String? largeIcon,
+  }) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: 'basic_channel',
+        title: title,
+        body: body,
+        largeIcon: largeIcon
+      ),
+    );
+  }
+
   static void cancelNotification(int id) async {
     await AwesomeNotifications().cancelSchedule(id);
   }

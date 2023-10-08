@@ -20,7 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
+    //Get token with help of awesomNotification plugin
     NotificationController.requestFirebaseToken();
+    //Get token with help of FirebaseMessaging plugin
+    NotificationController.getFcmToken();
     super.initState();
   }
 
@@ -97,6 +100,30 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const Text(
               'Show Wakeup Notification',
             ),
+          ),
+          const Text('Using Topics in Notification'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () => NotificationController.subscribeToTopic(
+                  'anime',
+                ),
+                icon: const Icon(Icons.add_circle_outline),
+                label: const Text(
+                  'Subscribe',
+                ),
+              ),
+              ElevatedButton.icon(
+                onPressed: () => NotificationController.unSubscribeToTopic(
+                  'anime',
+                ),
+                icon: const Icon(Icons.add_circle_outline),
+                label: const Text(
+                  'UnSubscribe',
+                ),
+              ),
+            ],
           ),
           ElevatedButton(
             onPressed: () => LocalNotification.cancelNotification(10),

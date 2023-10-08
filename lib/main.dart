@@ -1,11 +1,19 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:notification_course/firebase_options.dart';
 import 'package:notification_course/screens/home_screen.dart';
+import 'package:notification_course/screens/media_screen.dart';
 import 'package:notification_course/services/notification_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // await NotificationController.initializeRemoteNotification(debug: true);
+  await NotificationController.initializeFirebaseRemoteNotification(debug: true);
   await NotificationController.initializeLocalNotification(debug: true);
   // To listen to the notification overall when app is in background
   await NotificationController.initializeNotificationEventListners();
@@ -14,7 +22,7 @@ void main() async {
   scheduleMicrotask(() async {
     await NotificationController.getInitialNotificationAction();
   });
-  await NotificationController.initializeRemoteNotification(debug: true);
+  
   runApp(const MyApp());
 }
 
@@ -34,7 +42,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home:  const MediaScreen(),
     );
   }
 }
