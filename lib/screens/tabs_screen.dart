@@ -34,9 +34,7 @@ class _TabsScreenState extends State<TabsScreen> {
     return Scaffold(
       body: activeScreen,
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (int currentIndex) {
-          _tapOnbottomNav(currentIndex);
-        },
+        onTap: (int currentIndex) => _tapOnbottomNav(currentIndex),
         currentIndex: _activeIndex,
         items: [
           BottomNavigationBarItem(
